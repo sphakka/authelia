@@ -8,9 +8,12 @@ import {
     DialogContentText,
     DialogTitle,
     Divider,
+    Paper,
+    PaperProps,
     Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
+import Draggable from "react-draggable";
 import { useTranslation } from "react-i18next";
 
 import CopyButton from "@components/CopyButton";
@@ -26,7 +29,12 @@ const WebAuthnDeviceDetailsDialog = function (props: Props) {
     const { t: translate } = useTranslation("settings");
 
     return (
-        <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="webauthn-device-details-dialog-title">
+        <Dialog
+            open={props.open}
+            onClose={props.handleClose}
+            PaperComponent={PaperComponent}
+            aria-labelledby="webauthn-device-details-dialog-title"
+        >
             <DialogTitle id="webauthn-device-details-dialog-title">
                 {translate("WebAuthn Credential Details")}
             </DialogTitle>
@@ -160,6 +168,14 @@ function PropertyText(props: PropertyTextProps) {
             </Typography>
             <Typography display="inline">{props.value}</Typography>
         </Grid>
+    );
+}
+
+function PaperComponent(props: PaperProps) {
+    return (
+        <Draggable handle="#webauthn-device-details-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
+            <Paper {...props} />
+        </Draggable>
     );
 }
 
